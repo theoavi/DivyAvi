@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avi & Divya — Engagement</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --ink:#1B2340;
+  --ink-2:#242C4E;
+  --sand:#EDE6D6;
+  --sand-2:#E4DBC7;
+  --gold:#B8933F;
+  --clay:#C97B5A;
+  --ivory:#F7F3EA;
+  --charcoal:#23262F;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Jost',sans-serif;
+  background:var(--sand);
+  color:var(--charcoal);
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  font-weight:500;
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  align-items:flex-end;
+  overflow:hidden;
+}
+.hero img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:50% 30%;
+  filter:saturate(0.96);
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(27,35,64,0.05) 0%, rgba(27,35,64,0.1) 40%, rgba(27,35,64,0.82) 100%);
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  padding:0 8vw 9vh;
+  color:var(--ivory);
+  width:100%;
+  animation:riseIn 1.1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes riseIn{
+  from{opacity:0; transform:translateY(22px);}
+  to{opacity:1; transform:translateY(0);}
+}
+.hero .eyebrow{color:var(--gold); margin-bottom:18px;}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(46px, 9vw, 108px);
+  line-height:0.98;
+  letter-spacing:-0.01em;
+}
+.hero h1 .amp{
+  color:var(--gold);
+  font-weight:300;
+  padding:0 0.08em;
+}
+.hero-sub{
+  margin-top:22px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--ivory);
+  opacity:0.85;
+}
+
+/* postmark badge */
+.stamp{
+  position:absolute;
+  top:6vh;
+  right:6vw;
+  z-index:3;
+  width:126px;
+  height:126px;
+  border:1px dashed rgba(247,243,234,0.55);
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  transform:rotate(-9deg);
+  color:var(--ivory);
+  font-family:'IBM Plex Mono',monospace;
+  text-align:center;
+  animation:riseIn 1.1s 0.2s cubic-bezier(.19,1,.22,1) both;
+}
+.stamp::before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border:1px solid rgba(247,243,234,0.35);
+  border-radius:50%;
+}
+.stamp .s1{font-size:9px; letter-spacing:0.18em; opacity:0.8;}
+.stamp .s2{font-size:15px; font-weight:500; letter-spacing:0.04em;}
+.stamp .s3{font-size:9px; letter-spacing:0.18em; opacity:0.8;}
+
+.scroll-cue{
+  position:absolute;
+  bottom:4vh;
+  left:8vw;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--ivory);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  opacity:0.75;
+}
+.scroll-cue .line{
+  width:28px; height:1px; background:var(--ivory);
+  animation:pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scaleX(1); opacity:0.6;}
+  50%{transform:scaleX(1.6); opacity:1;}
+}
+
+/* ---------- GALLERY ---------- */
+.gallery{
+  padding:14vh 8vw 12vh;
+  max-width:1240px;
+  margin:0 auto;
+}
+.gallery .eyebrow{color:var(--clay); margin-bottom:14px;}
+.gallery h2{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(28px,4vw,44px);
+  max-width:14ch;
+  color:var(--ink);
+  margin-bottom:8vh;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  align-items:start;
+}
+.grid figure{
+  margin:0;
+  overflow:hidden;
+  background:var(--sand-2);
+}
+.grid img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:50% 38%;
+  transition:transform 1.4s cubic-bezier(.19,1,.22,1);
+}
+.grid figure:hover img{ transform:scale(1.045); }
+
+.g-left{ aspect-ratio:4/5.2; }
+.g-right{
+  aspect-ratio:1000/1500;
+  transform:translateY(6vh);
+}
+.g-right img{ object-position:50% 50%; }
+.g-coda{
+  grid-column:1 / 3;
+  justify-self:center;
+  width:56%;
+  aspect-ratio:4/3.1;
+  margin-top:6vh;
+}
+.g-coda img{ object-position:50% 38%; }
+
+/* ---------- DETAILS ---------- */
+.details{
+  background:var(--ink);
+  color:var(--ivory);
+  padding:16vh 8vw;
+  text-align:center;
+  position:relative;
+}
+.details .eyebrow{ color:var(--gold); }
+.details h2{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(34px,6vw,60px);
+  margin:20px 0 34px;
+}
+.rule{
+  width:1px; height:52px;
+  background:linear-gradient(var(--gold), transparent);
+  margin:0 auto 34px;
+}
+.date-big{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:clamp(20px,3.4vw,30px);
+  letter-spacing:0.14em;
+  margin-bottom:14px;
+}
+.venue{
+  font-family:'Jost',sans-serif;
+  font-weight:400;
+  font-size:19px;
+  letter-spacing:0.02em;
+  color:var(--ivory);
+  opacity:0.9;
+}
+.map-link{
+  display:inline-block;
+  margin-top:26px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--gold);
+  text-decoration:none;
+  border-bottom:1px solid rgba(184,147,63,0.5);
+  padding-bottom:3px;
+}
+.map-link:hover{ border-color:var(--gold); }
+
+/* ---------- RSVP (ticket) ---------- */
+.rsvp{
+  padding:16vh 8vw;
+  display:flex;
+  justify-content:center;
+}
+.ticket{
+  width:100%;
+  max-width:560px;
+  background:var(--ivory);
+  border:1px solid rgba(27,35,64,0.14);
+  position:relative;
+  padding:44px 40px 38px;
+  box-shadow:0 30px 60px -30px rgba(27,35,64,0.25);
+}
+.ticket-main .eyebrow{ color:var(--clay); margin-bottom:16px; }
+.ticket-main h3{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:30px;
+  color:var(--ink);
+  margin-bottom:10px;
+}
+.ticket-main p{
+  font-size:14.5px;
+  line-height:1.6;
+  color:var(--charcoal);
+  opacity:0.8;
+  max-width:38ch;
+}
+
+.tear{
+  position:relative;
+  height:1px;
+  border-top:1.5px dashed rgba(27,35,64,0.22);
+  margin:30px -40px 30px;
+}
+.tear::before, .tear::after{
+  content:"";
+  position:absolute;
+  top:-9px;
+  width:18px; height:18px;
+  border-radius:50%;
+  background:var(--sand);
+}
+.tear::before{ left:-9px; }
+.tear::after{ right:-9px; }
+
+.rsvp-form{ display:flex; flex-direction:column; gap:20px; }
+.field-row{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.field{ display:flex; flex-direction:column; gap:8px; }
+.field label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink);
+  opacity:0.6;
+}
+.field input, .field select, .field textarea{
+  font-family:'Jost',sans-serif;
+  font-size:15px;
+  color:var(--ink);
+  background:none;
+  border:none;
+  border-bottom:1px solid rgba(27,35,64,0.22);
+  padding:6px 2px 10px;
+  outline:none;
+  transition:border-color .25s ease;
+  appearance:none;
+  -webkit-appearance:none;
+}
+.field select{
+  background-image:linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position:calc(100% - 4px) 12px, calc(100% - 10px) 12px;
+  background-size:6px 6px;
+  background-repeat:no-repeat;
+}
+.field textarea{ resize:vertical; min-height:44px; font-family:'Jost',sans-serif; }
+.field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--gold); }
+.field input::placeholder, .field textarea::placeholder{ color:rgba(35,38,47,0.35); }
+
+.submit-btn{
+  align-self:flex-start;
+  margin-top:6px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--ink);
+  padding-bottom:4px;
+  border-bottom:1px solid var(--ink);
+  transition:color .3s ease, border-color .3s ease;
+}
+.submit-btn:hover{ color:var(--gold); border-color:var(--gold); }
+.submit-btn .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);
+}
+.submit-btn:disabled{ opacity:0.5; cursor:default; }
+
+.form-status{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.06em;
+  margin-top:2px;
+}
+.form-status.error{ color:#a4462f; }
+
+.rsvp-success{
+  text-align:center;
+  padding:20px 0 6px;
+}
+.rsvp-success .eyebrow{ color:var(--clay); margin-bottom:14px; }
+.rsvp-success h3{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:28px;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+.rsvp-success p{ font-size:14.5px; color:var(--charcoal); opacity:0.8; }
+
+/* ---------- FOOTER ---------- */
+footer{
+  background:var(--sand-2);
+  padding:8vh 8vw 7vh;
+  text-align:center;
+}
+.monogram{
+  width:56px; height:56px;
+  border:1px dashed rgba(184,147,63,0.6);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 18px;
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  color:var(--gold);
+  font-size:20px;
+}
+footer p{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--ink);
+  opacity:0.55;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:760px){
+  .stamp{ width:96px; height:96px; top:4vh; right:6vw; }
+  .stamp .s2{ font-size:12px; }
+  .grid{ grid-template-columns:1fr; }
+  .g-right{ transform:none; }
+  .g-coda{ grid-column:1; width:100%; margin-top:0; }
+  .ticket{ padding:36px 24px 32px; }
+  .tear{ margin:26px -24px 26px; }
+  .field-row{ grid-template-columns:1fr; gap:20px; }
+}
+
+/* ---------- PAGER ---------- */
+.pager{
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  padding:18px 0;
+  background:rgba(237,230,214,0.86);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(27,35,64,0.1);
+}
+.pager button{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:var(--ink);
+  opacity:0.45;
+  padding:4px 2px;
+  border-bottom:1px solid transparent;
+  transition:opacity .3s ease, border-color .3s ease;
+}
+.pager button.active{
+  opacity:1;
+  color:var(--ink);
+  border-bottom:1px solid var(--gold);
+}
+.pager .sep{ color:var(--ink); opacity:0.3; font-size:11px; }
+
+.page{ display:none; }
+.page.active{ display:block; }
+
+/* ---------- WEDDING PAGE ---------- */
+.w-hero{
+  position:relative;
+  min-height:66vh;
+  display:flex;
+  align-items:flex-end;
+  overflow:hidden;
+}
+.w-hero img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:50% 25%;
+  filter:saturate(0.96);
+}
+.w-hero::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(27,35,64,0.08) 0%, rgba(27,35,64,0.15) 35%, rgba(27,35,64,0.85) 100%);
+}
+.w-hero-content{
+  position:relative; z-index:2;
+  padding:0 8vw 7vh;
+  color:var(--ivory);
+  width:100%;
+}
+.w-hero .eyebrow{ color:var(--gold); margin-bottom:16px; }
+.w-hero h1{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(38px,7vw,80px);
+  line-height:0.98;
+}
+.w-hero h1 .amp{ color:var(--gold); font-weight:300; padding:0 0.08em; }
+.w-hero-sub{
+  margin-top:18px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  opacity:0.85;
+}
+
+.notice{
+  max-width:44ch;
+  margin:0 auto;
+  font-family:'Jost',sans-serif;
+  font-size:15px;
+  line-height:1.7;
+  opacity:0.82;
+}
+.notice-rule{
+  width:34px; height:1px;
+  background:var(--gold);
+  margin:26px auto 24px;
+  opacity:0.6;
+}
+
+:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="pager">
+  <button class="active" data-page="engagement" onclick="showPage('engagement', this)">Engagement</button>
+  <span class="sep">·</span>
+  <button data-page="wedding" onclick="showPage('wedding', this)">Wedding</button>
+</nav>
+
+<div id="page-engagement" class="page active">
+
+<section class="hero">
+  <img src="images/hero.jpg" alt="Avi and Divya in a sunlit stone alley">
+  <div class="stamp">
+    <div class="s1">Engaged</div>
+    <div class="s2">25·11·26</div>
+    <div class="s3">Jammu, IN</div>
+  </div>
+  <div class="hero-content">
+    <div class="eyebrow">The Engagement Of</div>
+    <h1>Avi <span class="amp">&amp;</span> Divya</h1>
+    <div class="hero-sub">25 November 2026 — Hotel Asia, Jammu</div>
+  </div>
+  <div class="scroll-cue"><span class="line"></span> Scroll</div>
+</section>
+
+<section class="gallery">
+  <div class="eyebrow">Our Journey So Far</div>
+  <h2>Of all the roads we've travelled, the best ones lead to each other.</h2>
+  <div class="grid">
+    <figure class="g-left"><img src="images/img1.jpg" alt="Walking down stone steps together"></figure>
+    <figure class="g-right"><img src="images/img3.jpg" alt="Avi and Divya together, close portrait"></figure>
+    <figure class="g-coda"><img src="images/img4.jpg" alt="A quiet moment among the palms"></figure>
+  </div>
+</section>
+
+<section class="details">
+  <div class="eyebrow">Save The Date</div>
+  <h2>Engagement</h2>
+  <div class="rule"></div>
+  <div class="date-big">25 · NOVEMBER · 2026</div>
+  <div class="venue">Hotel Asia, Jammu</div>
+  <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Hotel+Asia+Jammu" target="_blank" rel="noopener">View on map</a>
+</section>
+
+<section class="rsvp" id="rsvp">
+  <div class="ticket">
+    <div class="ticket-main">
+      <div class="eyebrow">Kindly Respond</div>
+      <h3>Save us a seat</h3>
+      <p>We'd love to know you're coming. Please RSVP by 10 November.</p>
+    </div>
+    <div class="tear"></div>
+    <form class="rsvp-form" data-event="Engagement" data-subject="RSVP - Avi & Divya's Engagement" onsubmit="return submitRSVP(event, this)" action="https://formspree.io/f/moeakqab" method="POST">
+      <div class="field-row">
+        <div class="field">
+          <label for="eng-name">Full name</label>
+          <input id="eng-name" name="name" type="text" placeholder="Jane Doe" required>
+        </div>
+        <div class="field">
+          <label for="eng-attending">Attending</label>
+          <select id="eng-attending" name="attending" required>
+            <option value="" disabled selected>Choose one</option>
+            <option value="Joyfully accepts">Joyfully accepts</option>
+            <option value="Regretfully declines">Regretfully declines</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="eng-guests">Guests (incl. you)</label>
+          <input id="eng-guests" name="guests" type="number" min="1" max="6" value="1" required>
+        </div>
+        <div class="field">
+          <label for="eng-email">Email</label>
+          <input id="eng-email" name="email" type="email" placeholder="you@email.com" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="eng-note">Message (optional)</label>
+        <textarea id="eng-note" name="message" rows="2" placeholder="A note for the couple"></textarea>
+      </div>
+      <input type="hidden" name="_subject" value="RSVP - Avi & Divya's Engagement">
+      <input type="hidden" name="event" value="Engagement">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <button type="submit" class="submit-btn"><span class="dot"></span>Send RSVP</button>
+      <div class="form-status" role="status"></div>
+    </form>
+    <div class="rsvp-success" hidden>
+      <div class="eyebrow">Received</div>
+      <h3>Thank you</h3>
+      <p>Your RSVP is in — we can't wait to celebrate with you.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="monogram">A&amp;D</div>
+  <p>See you there</p>
+</footer>
+
+</div>
+
+<div id="page-wedding" class="page">
+
+<section class="w-hero">
+  <img src="images/img1.jpg" alt="Avi and Divya on stone steps">
+  <div class="w-hero-content">
+    <div class="eyebrow">The Wedding Of</div>
+    <h1>Avi <span class="amp">&amp;</span> Divya</h1>
+    <div class="w-hero-sub">24 January 2026 — Jammu</div>
+  </div>
+</section>
+
+<section class="details">
+  <div class="eyebrow">Save The Date</div>
+  <h2>Wedding</h2>
+  <div class="rule"></div>
+  <div class="date-big">24 · JANUARY · 2026</div>
+  <div class="venue">Jammu</div>
+  <div class="notice-rule"></div>
+  <p class="notice">Venue and ceremony details are still coming together — we'll be posting you a formal invite closer to the date.</p>
+</section>
+
+<section class="rsvp">
+  <div class="ticket">
+    <div class="ticket-main">
+      <div class="eyebrow">Kindly Respond</div>
+      <h3>Save us a seat</h3>
+      <p>Let us know you'll be there — full details to follow by post.</p>
+    </div>
+    <div class="tear"></div>
+    <form class="rsvp-form" data-event="Wedding" data-subject="RSVP - Avi & Divya's Wedding" onsubmit="return submitRSVP(event, this)" action="https://formspree.io/f/moeakqab" method="POST">
+      <div class="field-row">
+        <div class="field">
+          <label for="wed-name">Full name</label>
+          <input id="wed-name" name="name" type="text" placeholder="Jane Doe" required>
+        </div>
+        <div class="field">
+          <label for="wed-attending">Attending</label>
+          <select id="wed-attending" name="attending" required>
+            <option value="" disabled selected>Choose one</option>
+            <option value="Joyfully accepts">Joyfully accepts</option>
+            <option value="Regretfully declines">Regretfully declines</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="wed-guests">Guests (incl. you)</label>
+          <input id="wed-guests" name="guests" type="number" min="1" max="6" value="1" required>
+        </div>
+        <div class="field">
+          <label for="wed-email">Email</label>
+          <input id="wed-email" name="email" type="email" placeholder="you@email.com" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="wed-note">Message (optional)</label>
+        <textarea id="wed-note" name="message" rows="2" placeholder="A note for the couple"></textarea>
+      </div>
+      <input type="hidden" name="_subject" value="RSVP - Avi & Divya's Wedding">
+      <input type="hidden" name="event" value="Wedding">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <button type="submit" class="submit-btn"><span class="dot"></span>Send RSVP</button>
+      <div class="form-status" role="status"></div>
+    </form>
+    <div class="rsvp-success" hidden>
+      <div class="eyebrow">Received</div>
+      <h3>Thank you</h3>
+      <p>Your RSVP is in — we can't wait to celebrate with you.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="monogram">A&amp;D</div>
+  <p>See you there</p>
+</footer>
+
+</div>
+
+<script>
+function showPage(name, btn){
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.pager button').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+function submitRSVP(evt, form){
+  evt.preventDefault();
+  var btn = form.querySelector('.submit-btn');
+  var status = form.querySelector('.form-status');
+  var ticket = form.closest('.ticket');
+  var success = ticket.querySelector('.rsvp-success');
+
+  btn.disabled = true;
+  status.textContent = 'Sending…';
+  status.classList.remove('error');
+
+  fetch(form.action, {
+    method:'POST',
+    headers:{ 'Accept':'application/json' },
+    body:new FormData(form)
+  }).then(function(res){
+    if(res.ok){
+      form.style.display = 'none';
+      ticket.querySelector('.tear').hidden = true;
+      success.hidden = false;
+    } else {
+      throw new Error('Request failed');
+    }
+  }).catch(function(){
+    btn.disabled = false;
+    status.classList.add('error');
+    status.textContent = "Couldn't send — please try again, or email us directly.";
+  });
+
+  return false;
+}
+</script>
+
+</body>
+</html>
