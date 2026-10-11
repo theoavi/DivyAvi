@@ -22,6 +22,7 @@
   --gold:        #B8933F;
   --gold-pale:   rgba(184,147,63,0.14);
   --clay:        #C97B5A;
+  --err:         #A4462F;
   color-scheme: light;
 }
 
@@ -35,6 +36,7 @@
     --ink-60:  rgba(237,230,214,0.60);
     --ink-35:  rgba(237,230,214,0.35);
     --ink-15:  rgba(237,230,214,0.12);
+    --err:     #E59478;
     color-scheme: dark;
   }
 }
@@ -47,6 +49,7 @@
   --ink-60:  rgba(237,230,214,0.60);
   --ink-35:  rgba(237,230,214,0.35);
   --ink-15:  rgba(237,230,214,0.12);
+  --err:     #E59478;
   color-scheme: dark;
 }
 
@@ -560,7 +563,20 @@ body {
   margin-top:2px;
   color:var(--ink-60);
 }
-.form-msg.err { color:#a4462f; }
+.form-msg.err { color:var(--err); }
+
+.field-err {
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:0.04em;
+  line-height:1.4;
+  color:var(--err);
+  min-height:0;
+}
+.field-err:empty { display:none; }
+.field.invalid input,
+.field.invalid select,
+.field.invalid textarea { border-color:var(--err); }
 
 .success-state { text-align:center; padding:20px 0 4px; }
 .success-state .eyebrow { color:var(--clay); display:block; margin-bottom:14px; }
@@ -785,43 +801,49 @@ footer {
     <h2 class="rsvp-title">Save us a seat</h2>
     <p class="rsvp-sub">We'd love to know you're coming. Please RSVP by 5 November.</p>
     <div class="tear"><div class="tear-dot"></div></div>
-    <form class="rsvp-form" onsubmit="return submitRSVP(event,this)"
+    <form class="rsvp-form" novalidate onsubmit="return submitRSVP(event,this)"
           action="https://script.google.com/macros/s/AKfycbx9Z9ST29uRtsJ56El3XRQdk1HO2_l_AbKX7bwIyJKSR6qUUAwOjbriPFi18H14XwY/exec" method="POST">
       <div class="field-row">
         <div class="field">
           <label for="eng-name">Full name</label>
-          <input id="eng-name" name="name" type="text" placeholder="Your name" required>
+          <input id="eng-name" aria-describedby="err-name" name="name" type="text" placeholder="Your name" required>
+          <p class="field-err" id="err-name" aria-live="polite"></p>
         </div>
         <div class="field">
           <label for="eng-attending">Attending</label>
-          <select id="eng-attending" name="attending" required>
+          <select id="eng-attending" aria-describedby="err-attending" name="attending" required>
             <option value="" disabled selected>Choose one</option>
             <option value="Joyfully accepts">Joyfully accepts</option>
             <option value="Regretfully declines">Regretfully declines</option>
           </select>
+          <p class="field-err" id="err-attending" aria-live="polite"></p>
         </div>
       </div>
       <div class="field-row">
         <div class="field">
           <label for="eng-phone">Phone</label>
-          <input id="eng-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your phone number" required>
+          <input id="eng-phone" aria-describedby="err-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile" maxlength="20" required>
+          <p class="field-err" id="err-phone" aria-live="polite"></p>
         </div>
         <div class="field">
           <label for="eng-email">Email</label>
-          <input id="eng-email" name="email" type="email" placeholder="you@email.com" required>
+          <input id="eng-email" aria-describedby="err-email" name="email" type="email" placeholder="you@email.com" required>
+          <p class="field-err" id="err-email" aria-live="polite"></p>
         </div>
       </div>
       <div class="field">
         <label for="eng-guests">Guests (incl. you)</label>
-        <input id="eng-guests" name="guests" type="number" min="1" max="10" value="1" required>
+        <input id="eng-guests" aria-describedby="err-guests" name="guests" type="number" min="1" max="10" value="1" required>
+        <p class="field-err" id="err-guests" aria-live="polite"></p>
       </div>
       <div class="field">
         <label for="eng-note">Message (optional)</label>
-        <textarea id="eng-note" name="message" rows="2" placeholder="A note for the couple"></textarea>
+        <textarea id="eng-note" aria-describedby="err-note" name="message" rows="2" placeholder="A note for the couple"></textarea>
+        <p class="field-err" id="err-note" aria-live="polite"></p>
       </div>
       <input type="hidden" name="event" value="Engagement">
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-      <button type="submit" class="submit-btn"><span class="dot"></span>Send RSVP</button>
+      <button type="submit" class="submit-btn" disabled><span class="dot"></span>Send RSVP</button>
       <div class="form-msg" role="status"></div>
     </form>
     <div class="success-state" hidden>
@@ -901,8 +923,47 @@ function downloadICS(key){
   return false;
 }
 
+/* Phone: Indian mobile (10 digits, optional +91 / 0 prefix) or international with + and 8–15 digits.
+   Spaces, dashes, dots and brackets are ignored. */
+function phoneError(v){
+  var d=v.replace(/[\s\-().]/g,'');
+  if(!d) return 'Please enter your phone number.';
+  if(/^(\+?91|0)?[6-9]\d{9}$/.test(d) || /^\+\d{8,15}$/.test(d)) return '';
+  return 'Please enter a valid 10-digit mobile number (or add your country code, e.g. +44…).';
+}
+var RULES={
+  'eng-name':function(v){v=v.trim();return !v?'Please enter your name.':v.length<2?'Name looks too short.':'';},
+  'eng-attending':function(v){return v?'':'Please let us know if you can make it.';},
+  'eng-phone':phoneError,
+  'eng-email':function(v){v=v.trim();return !v?'Please enter your email.':/^[^s@]+@[^s@]+.[^s@]+$/.test(v)?'':'Please enter a valid email address.';},
+  'eng-guests':function(v){var n=Number(v);return v===''?'Please enter the number of guests.':(Number.isInteger(n)&&n>=1&&n<=10)?'':'Guests must be between 1 and 10.';},
+  'eng-note':function(v){return v.length>1000?'Message is too long (max 1000 characters).':'';}
+};
+/* Live validation: errors show as soon as a field is touched; Send stays greyed out until everything is valid */
+var validateRSVP=(function(){
+  var form=document.querySelector('.rsvp-form'),btn=form.querySelector('.submit-btn'),touched={};
+  function check(id,show){
+    var el=document.getElementById(id),err=RULES[id](el.value);
+    if(show||touched[id]){
+      document.getElementById(el.getAttribute('aria-describedby')).textContent=err;
+      el.closest('.field').classList.toggle('invalid',!!err);
+      el.setAttribute('aria-invalid',err?'true':'false');
+    }
+    return !err;
+  }
+  function refresh(showAll){var ok=true;for(var id in RULES)ok=check(id,showAll)&&ok;btn.disabled=!ok;return ok;}
+  Object.keys(RULES).forEach(function(id){
+    var el=document.getElementById(id);
+    function mark(){touched[id]=true;refresh();}
+    el.addEventListener('input',mark);el.addEventListener('change',mark);el.addEventListener('blur',mark);
+  });
+  refresh();
+  return function(){return refresh(true);};
+})();
+
 function submitRSVP(evt,form){
   evt.preventDefault();
+  if(!validateRSVP()) return false;
   var btn=form.querySelector('.submit-btn'),
       msg=form.querySelector('.form-msg'),
       ticket=form.closest('.rsvp-ticket'),
