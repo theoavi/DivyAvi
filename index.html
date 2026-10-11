@@ -786,7 +786,7 @@ footer {
     <p class="rsvp-sub">We'd love to know you're coming. Please RSVP by 5 November.</p>
     <div class="tear"><div class="tear-dot"></div></div>
     <form class="rsvp-form" onsubmit="return submitRSVP(event,this)"
-          action="https://formspree.io/f/moeakqab" method="POST">
+          action="https://script.google.com/macros/s/AKfycbx9Z9ST29uRtsJ56El3XRQdk1HO2_l_AbKX7bwIyJKSR6qUUAwOjbriPFi18H14XwY/exec" method="POST">
       <div class="field-row">
         <div class="field">
           <label for="eng-name">Full name</label>
@@ -819,7 +819,6 @@ footer {
         <label for="eng-note">Message (optional)</label>
         <textarea id="eng-note" name="message" rows="2" placeholder="A note for the couple"></textarea>
       </div>
-      <input type="hidden" name="_subject" value="RSVP — Avi & Divya's Engagement">
       <input type="hidden" name="event" value="Engagement">
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
       <button type="submit" class="submit-btn"><span class="dot"></span>Send RSVP</button>
@@ -910,9 +909,10 @@ function submitRSVP(evt,form){
       ok=ticket.querySelector('.success-state'),
       tear=ticket.querySelector('.tear');
   btn.disabled=true; msg.textContent='Sending…'; msg.classList.remove('err');
-  fetch(form.action,{method:'POST',headers:{Accept:'application/json'},body:new FormData(form)})
-    .then(function(r){
-      if(r.ok){form.hidden=true;tear.hidden=true;ok.hidden=false;}
+  fetch(form.action,{method:'POST',body:new FormData(form)})
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(d.result==='success'){form.hidden=true;tear.hidden=true;ok.hidden=false;}
       else throw 0;
     }).catch(function(){
       btn.disabled=false;
