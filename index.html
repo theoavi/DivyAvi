@@ -54,6 +54,7 @@
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+[hidden] { display:none !important; }
 html { scroll-behavior:smooth; }
 body {
   font-family:'Jost', sans-serif;
@@ -935,7 +936,7 @@ var RULES={
   'eng-name':function(v){v=v.trim();return !v?'Please enter your name.':v.length<2?'Name looks too short.':'';},
   'eng-attending':function(v){return v?'':'Please let us know if you can make it.';},
   'eng-phone':phoneError,
-  'eng-email':function(v){v=v.trim();return !v?'Please enter your email.':/^[^s@]+@[^s@]+.[^s@]+$/.test(v)?'':'Please enter a valid email address.';},
+  'eng-email':function(v){v=v.trim();return !v?'Please enter your email.':/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)?'':'Please enter a valid email address.';},
   'eng-guests':function(v){var n=Number(v);return v===''?'Please enter the number of guests.':(Number.isInteger(n)&&n>=1&&n<=10)?'':'Guests must be between 1 and 10.';},
   'eng-note':function(v){return v.length>1000?'Message is too long (max 1000 characters).':'';}
 };
@@ -973,7 +974,7 @@ function submitRSVP(evt,form){
   fetch(form.action,{method:'POST',body:new FormData(form)})
     .then(function(r){ return r.json(); })
     .then(function(d){
-      if(d.result==='success'){form.hidden=true;tear.hidden=true;ok.hidden=false;}
+      if(d.result==='success'){msg.textContent='';form.hidden=true;tear.hidden=true;ok.hidden=false;}
       else throw 0;
     }).catch(function(){
       btn.disabled=false;
